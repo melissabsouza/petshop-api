@@ -25,7 +25,7 @@ public class TutorService {
 //            tutor.byId = this.findByCPF(tutorDTO.getCpf());
 //
 //
-//        }
+       }
 
         public TutorDTO findById(String cpf) {
             Optional<Tutor> byId = tutorRepository.findById(cpf);
