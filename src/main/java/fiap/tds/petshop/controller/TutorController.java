@@ -5,6 +5,7 @@ import fiap.tds.petshop.service.TutorService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +19,8 @@ import java.util.List;
 @RequestMapping("/tutores")
 public class TutorController {
 
-    private TutorService tutorService;
+    @Autowired
+    private final TutorService tutorService;
 
     @GetMapping
     public String listarTutores(Model model) {
@@ -30,7 +32,7 @@ public class TutorController {
     @GetMapping("/novo")
     public String novoTutor(Model model) {
         model.addAttribute("tutor", new TutorDTO());
-        return "tutores/novo";
+        return "tutores/formulario";
     }
 
     @PostMapping
@@ -41,6 +43,7 @@ public class TutorController {
         if (bindingResults.hasErrors()){
             bindingResults.getAllErrors().forEach(e-> log.info(e.toString()));
             model.addAttribute("tutor", tutor);
+            model.addAttribute("isEdit", false);
             return "tutores/formulario";
         }
         tutorService.saveTutor(tutor);
@@ -50,6 +53,7 @@ public class TutorController {
     @GetMapping("/editar/{cpf}")
     public String editarTutor(@PathVariable String cpf, Model model){
           model.addAttribute("tutor", tutorService.findById(cpf));
+        model.addAttribute("isEdit", true);
           return "tutores/formulario";
     }
 

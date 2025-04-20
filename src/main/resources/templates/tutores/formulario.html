@@ -2,9 +2,47 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Cadastro de Tutores</title>
 </head>
-<body>
+<body class="flex justify-center items-center m-10">
+
+<div class="bg-white p-8 rounded-lg border-4 border-gray-300 w-full max-w-lg h-90" >
+
+    <div class="flex flex-col justify-center items-center ">
+        <h2 class="text-xl font-black text-black text-center mb-4">Cadastro de Tutores</h2>
+        <a class="text-black mb-4" th:href="@{/tutores}">Lista de Tutores </a>
+
+
+    </div>
+
+    <div class="flex items-center">
+        <form th:action="@{/tutores}" method="post" th:object="${tutor}">
+
+            <label class="block text-black font-medium mb-2" for="cpf">CPF</label>
+            <input class="w-96 p-3 border border-gray-300 rounded-lg" th:field="*{cpf}" th:attr="readonly=${isEdit}" type="text" id="cpf" name="cpf" placeholder="CPF">
+            <li th:each="err : ${#fields.errors('cpf')}" th:text="${err}">ERRO</li>
+
+            <label class="block text-black font-medium mb-2" for="nome">Nome</label>
+            <input class="w-96 p-3 border border-gray-300 rounded-lg" th:field="*{nome}" type="text" id="nome" name="nome" placeholder="Nome">
+            <li th:each="err : ${#fields.errors('nome')}" th:text="${err}">ERRO</li>
+
+            <label class="block text-black font-medium mb-2" for="telefone">Telefone</label>
+            <input class="w-96 p-3 border border-gray-300 rounded-lg" th:field="*{telefone}" type="text" id="telefone" name="telefone" placeholder="telefone">
+            <li th:each="err : ${#fields.errors('telefone')}" th:text="${err}">ERRO</li>
+
+            <label class="block text-black font-medium mb-2" for="email">Email</label>
+            <input class="w-96 p-3 border border-gray-300 rounded-lg" th:field="*{email}" type="email" id="email" name="email" placeholder="Email">
+            <li th:each="err : ${#fields.errors('email')}" th:text="${err}">ERRO</li>
+
+
+            <div class="flex justify-center items-center">
+                <button class="mt-3 bg-violet-600 text-white rounded px-10 py-2 hover:bg-violet-300" type="submit">Salvar</button>
+            </div>
+        </form>
+
+    </div>
+</div>
 
 </body>
 </html>

@@ -21,7 +21,7 @@ public class TutorService {
     public TutorDTO saveTutor(TutorDTO tutorDTO) {
         Tutor tutor = toEntity(tutorDTO);
 
-        if(tutorDTO .getCpf()==null){
+        if (tutorDTO.getCpf() == null || !tutorRepository.existsById(tutorDTO.getCpf())) {
             tutor = tutorRepository.save(tutor);
         } else {
             TutorDTO byId = this.findById(tutorDTO.getCpf());

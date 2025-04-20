@@ -2,9 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Lista de Tutores</title>
 </head>
-<body>
+<body class="p-6">
+<div th:insert="~{fragments/header :: header}">
+    MENU NO HEADER
+</div>
+<div>
+    <h1 class="text-xl font-black text-black text-center mb-4">Lista de Tutores</h1>
+
+    <div class="text-center mt-8">
+        <a class="text-black mb-4" th:href="@{/tutores/novo}" >Novo Tutor</a>
+    </div>
+
+    <div class="p-6">
+        <table class="w-full border-collapse">
+            <thead>
+            <tr class="bg-violet-600 text-white">
+                <th class="p-3 text-left">CPF</th>
+                <th class="p-3 text-left">Nome</th>
+                <th class="p-3 text-left">Telefone</th>
+                <th class="p-3 text-left">Email</th>
+                <th class="p-3 text-left">Animais</th>
+                <th class="p-3 text-left">Ações</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr class="border-b" th:each="tutor : ${tutores}">
+                <td class="p-3 text-gray" th:text="${tutor.cpf}">cpf</td>
+                <td class="p-3" th:text="${tutor.nome}">nome</td>
+                <td class="p-3" th:text="${tutor.telefone}">nome</td>
+                <td class="p-3" th:text="${tutor.email}">email</td>
+                <td class="p-3" th:text="${tutor.animais}">animais</td>
+
+                <td class="p-3">
+                    <a class="text-blue-600 hover:underline" th:href="@{/tutores/editar/{id}(id=${tutor.cpf})}">Editar</a>
+                    <a class="text-blue-600 hover:underline" th:href="@{/tutores/deletar/{id}(id=${tutor.cpf})}">Deletar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
 
 </body>
 </html>
