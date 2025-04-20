@@ -15,7 +15,6 @@ import java.util.List;
 @Entity
 public class Tutor {
     @Id
-    @Column(unique = true, nullable = false)
     @NotBlank(message = "Cpf é obrigatório")
     @NotNull(message = "Cpf não pode ser nulo")
     private String cpf;
