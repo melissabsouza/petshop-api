@@ -1,6 +1,7 @@
 package fiap.tds.petshop.service;
 
 import fiap.tds.petshop.dto.TutorDTO;
+import fiap.tds.petshop.entity.Animal;
 import fiap.tds.petshop.entity.Tutor;
 import fiap.tds.petshop.repository.TutorRepository;
 import lombok.AllArgsConstructor;
@@ -50,7 +51,7 @@ public class TutorService {
         if(byId.isPresent()) {
             return toDto(byId.get());
         }
-        throw new RuntimeException("cpf nao encontrado");
+        throw new RuntimeException("CPF não encontrado");
     }
 
 
@@ -60,7 +61,16 @@ public class TutorService {
         tutor.setNome(tutorDTO.getNome());
         tutor.setEmail(tutorDTO.getEmail());
         tutor.setTelefone(tutorDTO.getTelefone());
-        tutor.setAnimais(tutorDTO.getAnimais());
+        if (tutorDTO.getNomesDosAnimais() != null) {
+            List<Animal> animais = tutorDTO.getNomesDosAnimais().stream()
+                    .map(nome -> {
+                        Animal animal = new Animal();
+                        animal.setNome(nome);
+                        animal.setTutor(tutor);
+                        return animal;
+                    }).toList();
+            tutor.setAnimais(animais);
+        }
         return tutor;
     }
 
@@ -70,7 +80,12 @@ public class TutorService {
         tutorDTO.setNome(tutor.getNome());
         tutorDTO.setEmail(tutor.getEmail());
         tutorDTO.setTelefone(tutor.getTelefone());
-        tutorDTO.setAnimais(tutor.getAnimais());
+        if (tutor.getAnimais() != null) {
+            List<String> nomesDosAnimais = tutor.getAnimais().stream()
+                    .map(Animal::getNome)
+                    .toList();
+            tutorDTO.setNomesDosAnimais(nomesDosAnimais);
+        }
         return tutorDTO;
     }
 }

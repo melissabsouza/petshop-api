@@ -36,6 +36,5 @@ public class TutorDTO {
             message = "Use XX 9XXXX-XXXX ou XX XXXX-XXXX")
     private String telefone;
 
-    @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Animal> animais;
+    private List<String> nomesDosAnimais;
 }

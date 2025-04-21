@@ -12,6 +12,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,9 +36,8 @@ public class AnimalDTO {
     @Size(min=4, message = "Raça deve ter pelo menos 4 caracteres")
     private String raca;
 
-    @NotNull(message = "Idade não pode ser nula")
-    @Min(value = 0, message = "a idade não pode ser negativa")
-    private int idade;
+    @NotNull(message = "Data não pode ser nula")
+    private LocalDate dataNascimento;
 
     @NotNull(message = "Peso não pode ser nulo")
     @Min(value = 0, message = "peso não pode ser negativo")
@@ -46,7 +48,5 @@ public class AnimalDTO {
     @NotNull(message = "não pode ser nulo")
     private boolean castrado;
 
-    @ManyToOne
-    @JoinColumn(name = "tutor_cpf")
-    private Tutor tutor;
+    private String tutorCpf;
 }
