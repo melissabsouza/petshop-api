@@ -18,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TutorDTO {
+    private Long id;
+
     private String cpf;
 
     @NotBlank(message = "Nome é obrigatório")

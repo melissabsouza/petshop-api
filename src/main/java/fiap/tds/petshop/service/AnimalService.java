@@ -21,30 +21,34 @@ public class AnimalService {
     @Autowired
     private TutorRepository tutorRepository;
 
-   public AnimalDTO saveAnimal(AnimalDTO animalDTO) {
-       Animal animal = toEntity(animalDTO);
+    public AnimalDTO saveAnimal(AnimalDTO animalDTO) {
+        Animal animal = toEntity(animalDTO);
 
-       if(animalDTO.getId()==null){
-           animal = animalRepository.save(animal);
-       } else{
-           AnimalDTO byId = this.findById(animalDTO.getId());
-           byId.setNome(animalDTO.getNome());
-           byId.setTipo(animalDTO.getTipo());
-           byId.setRaca(animalDTO.getRaca());
-           byId.setDataNascimento(animalDTO.getDataNascimento());
-           byId.setPeso(animalDTO.getPeso());
-           byId.setSexo(animalDTO.getSexo());
-           byId.setCastrado(animalDTO.isCastrado());
-       }
-       if (animalDTO.getTutorCpf() != null) {
-           Tutor tutor = tutorRepository.findById(animalDTO.getTutorCpf())
-                   .orElseThrow(() -> new RuntimeException("Tutor não encontrado"));
-           animal.setTutor(tutor);
-       }
+        if(animalDTO.getId() == null) {
+            animal = animalRepository.save(animal);
+        } else {
+            AnimalDTO byId = this.findById(animalDTO.getId());
+            byId.setNome(animalDTO.getNome());
+            byId.setTipo(animalDTO.getTipo());
+            byId.setRaca(animalDTO.getRaca());
+            byId.setDataNascimento(animalDTO.getDataNascimento());
+            byId.setPeso(animalDTO.getPeso());
+            byId.setSexo(animalDTO.getSexo());
+            byId.setCastrado(animalDTO.isCastrado());
+        }
 
-       animal = animalRepository.save(animal);
-       return toDto(animal);
-   }
+        if (animalDTO.getTutorCpf() != null) {
+            // Agora usando findByCpf
+            Tutor tutor = tutorRepository.findByCpf(animalDTO.getTutorCpf())
+                    .orElseThrow(() -> new RuntimeException("Tutor não encontrado com CPF: " + animalDTO.getTutorCpf()));
+            animal.setTutor(tutor);
+        }
+
+        animal = animalRepository.save(animal);
+        return toDto(animal);
+    }
+
+
     public List<AnimalDTO> getAllAnimals(){
         List<Animal> animals = animalRepository.findAll();
         List<AnimalDTO> animalDTOs = animals.stream().map(AnimalService::toDto).toList();
@@ -74,7 +78,8 @@ public class AnimalService {
         animal.setCastrado(animalDTO.isCastrado());
 
         if (animalDTO.getTutorCpf() != null) {
-            Tutor tutor = tutorRepository.findById(animalDTO.getTutorCpf())
+            // Agora usando findByCpf
+            Tutor tutor = tutorRepository.findByCpf(animalDTO.getTutorCpf())
                     .orElseThrow(() -> new RuntimeException("Tutor não encontrado com CPF: " + animalDTO.getTutorCpf()));
             animal.setTutor(tutor);
         }

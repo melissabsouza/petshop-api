@@ -22,10 +22,11 @@ public class TutorService {
     public TutorDTO saveTutor(TutorDTO tutorDTO) {
         Tutor tutor = toEntity(tutorDTO);
 
-        if (tutorDTO.getCpf() == null || !tutorRepository.existsById(tutorDTO.getCpf())) {
+        if (tutorDTO.getId() == null ) {
             tutor = tutorRepository.save(tutor);
         } else {
-            TutorDTO byId = this.findById(tutorDTO.getCpf());
+            TutorDTO byId = this.findById(tutorDTO.getId());
+            byId.setCpf(tutorDTO.getCpf());
             byId.setEmail(tutorDTO.getEmail());
             byId.setNome(tutorDTO.getNome());
             byId.setTelefone(tutor.getTelefone());
@@ -42,21 +43,22 @@ public class TutorService {
         return tutorDTOs;
     }
 
-    public void deleteById(String cpf) {
-        tutorRepository.deleteById(cpf);
+    public void deleteById(Long id) {
+        tutorRepository.deleteById(id);
     }
 
-    public TutorDTO findById(String cpf) {
-        Optional<Tutor> byId = tutorRepository.findById(cpf);
+    public TutorDTO findById(Long id) {
+        Optional<Tutor> byId = tutorRepository.findById(id);
         if(byId.isPresent()) {
             return toDto(byId.get());
         }
-        throw new RuntimeException("CPF não encontrado");
+        throw new RuntimeException("id não encontrado");
     }
 
 
     private static Tutor toEntity(TutorDTO tutorDTO) {
         Tutor tutor = new Tutor();
+        tutor.setId(tutorDTO.getId());
         tutor.setCpf(tutorDTO.getCpf());
         tutor.setNome(tutorDTO.getNome());
         tutor.setEmail(tutorDTO.getEmail());
@@ -76,6 +78,7 @@ public class TutorService {
 
     private static TutorDTO toDto(Tutor tutor) {
         TutorDTO tutorDTO = new TutorDTO();
+        tutorDTO.setId(tutor.getId());
         tutorDTO.setCpf(tutor.getCpf());
         tutorDTO.setNome(tutor.getNome());
         tutorDTO.setEmail(tutor.getEmail());

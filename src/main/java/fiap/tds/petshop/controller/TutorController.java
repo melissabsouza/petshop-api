@@ -51,15 +51,15 @@ public class TutorController {
     }
 
     @GetMapping("/editar/{cpf}")
-    public String editarTutor(@PathVariable String cpf, Model model){
-          model.addAttribute("tutor", tutorService.findById(cpf));
+    public String editarTutor(@PathVariable Long id, Model model){
+          model.addAttribute("tutor", tutorService.findById(id));
         model.addAttribute("isEdit", true);
           return "tutores/formulario";
     }
 
     @GetMapping("/deletar/{cpf}")
-    public String excluirTutor(@PathVariable String cpf, Model model){
-        tutorService.deleteById(cpf);
+    public String excluirTutor(@PathVariable Long id, Model model){
+        tutorService.deleteById(id);
         return "redirect:/tutores";
     }
 

@@ -17,8 +17,13 @@ import java.util.List;
 @Entity
 public class Tutor {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotBlank(message = "Cpf é obrigatório")
     @NotNull(message = "Cpf não pode ser nulo")
+    @Pattern(regexp= "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$",
+    message= "Formato de CPF inválido, use 12345678900")
     private String cpf;
 
     @NotBlank(message = "Nome é obrigatório")
