@@ -4,10 +4,7 @@ import fiap.tds.petshop.entity.Tutor;
 import fiap.tds.petshop.entity.enums.SexoType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,5 +45,9 @@ public class AnimalDTO {
     @NotNull(message = "não pode ser nulo")
     private boolean castrado;
 
+    @NotBlank(message = "Cpf é obrigatório")
+    @NotNull(message = "Cpf não pode ser nulo")
+    @Pattern(regexp= "^\\d{3}\\.?\\d{3}\\.?\\d{3}-?\\d{2}$",
+            message= "Formato de CPF inválido, use 12345678900")
     private String tutorCpf;
 }
