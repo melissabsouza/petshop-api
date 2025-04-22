@@ -19,6 +19,8 @@
     <div class="flex items-center">
         <form th:action="@{/tutores}" method="post" th:object="${tutor}">
 
+            <input type="hidden" th:field="*{id}">
+
             <label class="block text-black font-medium mb-2" for="cpf">CPF</label>
             <input class="w-96 p-3 border border-gray-300 rounded-lg" th:field="*{cpf}" th:attr="readonly=${isEdit}" type="text" id="cpf" name="cpf" placeholder="CPF">
             <li th:each="err : ${#fields.errors('cpf')}" th:text="${err}">ERRO</li>
