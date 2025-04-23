@@ -6,8 +6,24 @@ server:
       force-response: true
 
 spring:
+  security:
+    oauth2:
+      client:
+        provider:
+          petshop-realm:
+            issuer-uri: http://localhost:7080/realms/petshop-realm
+        registration:
+          keycloak:
+            provider: petshop-realm
+            authorization-grant-type: authorization_code
+            client-id: api-petshop
+            client-secret: 6DbmJOjIUPN6ylheyCnyJ59qLZ3KyD0u
+            scope: openid
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
   application:
     name: petshop
+
+
 
   thymeleaf:
     cache: false

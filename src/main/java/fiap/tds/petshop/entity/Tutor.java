@@ -38,7 +38,7 @@ public class Tutor {
     private String email;
 
     @NotBlank(message = "Telefone é obrigatório")
-    @Pattern(regexp = "\\d{2}\\s?(9\\d{4}-\\d{4}|\\d{4}-\\d{4})",
+    @Pattern(regexp = "\\d{2}\\s?(9\\d{4}-?\\d{4}|\\d{4}-?\\d{4})",
             message = "Use XX 9XXXX-XXXX ou XX XXXX-XXXX")
     private String telefone;
 
