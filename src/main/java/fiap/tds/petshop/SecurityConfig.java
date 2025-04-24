@@ -62,9 +62,7 @@ public class SecurityConfig {
         });
 
         http.authorizeHttpRequests(requests -> {
-            requests.requestMatchers("/**", "/tutores", "/tutores/novo", "/tutores/editar/**",
-                            "/animais", "/animais/novo", "/animais/editar/**", "/animais/deletar/**", "/tutores/deletar/**")
-                    .authenticated();
+            requests.requestMatchers("/**").authenticated();
 
             requests.requestMatchers("/tutores", "/tutores/novo", "/tutores/editar/**",
                             "/animais", "/animais/novo", "/animais/editar/**")
