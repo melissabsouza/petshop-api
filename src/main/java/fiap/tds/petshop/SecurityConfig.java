@@ -45,7 +45,9 @@ public class SecurityConfig {
                 .filter(authority -> authority instanceof OidcUserAuthority)
                 .map(OidcUserAuthority.class::cast).map(OidcUserAuthority::getIdToken)
                 .map(OidcIdToken::getClaims).map(realmRolesAuthoritiesConverter::convert)
-                .flatMap(roles -> roles.stream()).collect(Collectors.toSet());
+                .flatMap(roles -> roles.stream())
+                .map(authority -> new SimpleGrantedAuthority(authority.getAuthority().replace("ROLE_", "")))
+                .collect(Collectors.toSet());
     }
 
     @Bean
@@ -60,17 +62,20 @@ public class SecurityConfig {
         });
 
         http.authorizeHttpRequests(requests -> {
-            requests.requestMatchers("/", "/tutores", "/tutores/novo", "/tutores/editar/{id}",
-                    "animais", "animais/novo", "animais/editar/{id}").authenticated();
-            requests.requestMatchers("/admin/**").hasRole("admin");
+            requests.requestMatchers("/**", "/tutores", "/tutores/novo", "/tutores/editar/**",
+                            "/animais", "/animais/novo", "/animais/editar/**", "/animais/deletar/**", "/tutores/deletar/**")
+                    .authenticated();
+
+            requests.requestMatchers("/tutores", "/tutores/novo", "/tutores/editar/**",
+                            "/animais", "/animais/novo", "/animais/editar/**")
+                    .hasRole("USER");
+
+            requests.requestMatchers("/**")
+                    .hasRole("ADMIN");
+
             requests.anyRequest().denyAll();
         });
 
-//        http.authorizeHttpRequests()
-//                .requestMatchers("/", "/produtos", "/produtos/listar", "/produtos/editar/*").hasRole("user")   // user pode ver e editar produtos
-//                .requestMatchers("/produtos/novo").hasRole("user") // user pode criar produto
-//                .requestMatchers("/admin/**").hasRole("admin")  // admin tem acesso total
-//                .anyRequest().denyAll();
 
         return http.build();
     }

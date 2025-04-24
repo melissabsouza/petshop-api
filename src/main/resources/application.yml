@@ -17,9 +17,11 @@ spring:
             provider: petshop-realm
             authorization-grant-type: authorization_code
             client-id: api-petshop
-            client-secret: 6DbmJOjIUPN6ylheyCnyJ59qLZ3KyD0u
+            client-secret: JtAUnpNKlNMno50OlxqduRr8cGhGsOqY
             scope: openid
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            redirect-uri: "http://localhost:8080/login/oauth2/code/keycloak"
+
   application:
     name: petshop
 
