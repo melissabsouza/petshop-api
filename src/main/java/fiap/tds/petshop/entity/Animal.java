@@ -49,7 +49,7 @@ public class Animal {
     private boolean castrado;
 
     @ManyToOne
-    @JoinColumn(name = "tutor_cpf")
+    @JoinColumn(name = "tutor_cpf", referencedColumnName = "cpf")
     @ToString.Exclude
     private Tutor tutor;
 }

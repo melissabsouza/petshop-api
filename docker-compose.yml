@@ -28,7 +28,7 @@
 #
 
 services:
-  keycloak:
+  keycloak_novo:
     image: quay.io/keycloak/keycloak:24.0
     environment:
       KC_HOSTNAME: localhost
@@ -51,8 +51,24 @@ services:
       - "7443:7443"
     networks:
       - local_network
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - monitoring
 
 networks:
   local_network:
     driver: bridge
-
+  monitoring:
+    driver: bridge

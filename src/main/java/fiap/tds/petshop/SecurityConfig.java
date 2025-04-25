@@ -62,6 +62,7 @@ public class SecurityConfig {
         });
 
         http.authorizeHttpRequests(requests -> {
+            requests.requestMatchers("/actuator/prometheus").permitAll();
             requests.requestMatchers("/**").authenticated();
 
             requests.requestMatchers("/tutores", "/tutores/novo", "/tutores/editar/**",

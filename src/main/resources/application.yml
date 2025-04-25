@@ -5,6 +5,17 @@ server:
       charset: UTF-8
       force-response: true
 
+management:
+  endpoints:
+    health:
+      show-details: always
+    web:
+      exposure:
+        include: health,info,prometheus
+      endpoint:
+        prometheus:
+          enabled: true
+
 spring:
   security:
     oauth2:
@@ -21,7 +32,8 @@ spring:
             scope: openid
 #            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             redirect-uri: "http://localhost:8080/login/oauth2/code/keycloak"
-
+      whitelist:
+        - /actuator/prometheus
   application:
     name: petshop
 
@@ -34,7 +46,7 @@ spring:
     open-in-view: true
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -44,6 +56,8 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+    schema: classpath:schema.sql  # Garante que o schema seja criado
+    data: classpath:data.sql
 
 #  sql:
 #    init:

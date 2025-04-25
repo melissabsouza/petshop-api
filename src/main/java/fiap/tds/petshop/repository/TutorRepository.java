@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface TutorRepository extends JpaRepository<Tutor, Long> {
     Optional<Tutor> findByCpf(String cpf);
+    long count();
 }
