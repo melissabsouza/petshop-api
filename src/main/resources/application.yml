@@ -56,14 +56,8 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
-    schema: classpath:schema.sql  # Garante que o schema seja criado
+    schema: classpath:schema.sql
     data: classpath:data.sql
-
-#  sql:
-#    init:
-#      mode: always
-#      data-locations: classpath:data.sql
-#      # schema-locations: classpath:schema.sql # descomenta se quiser usar schema.sql
 
   messages:
     encoding: UTF-8

@@ -18,7 +18,7 @@ public class AnimalMetricsService {
 
     private final AnimalRepository animalRepository;
     private final MeterRegistry meterRegistry;
-    private final AtomicReference<Double> pesoMedioRef = new AtomicReference<>(0.0);  // Valor inicial
+    private final AtomicReference<Double> pesoMedioRef = new AtomicReference<>(0.0);
 
     @Autowired
     public AnimalMetricsService(AnimalRepository animalRepository, MeterRegistry meterRegistry) {
@@ -28,7 +28,7 @@ public class AnimalMetricsService {
 
     @PostConstruct
     public void init() {
-        animalMetrics();  // Chama logo após a inicialização do bean
+        animalMetrics();
     }
 
     public void animalMetrics() {
